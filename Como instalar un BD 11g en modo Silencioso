@@ -1,0 +1,14 @@
+(*)
+Se necesita crear una base de datos  pero no se tiene acceso a una interfaz gráfica, configurar todo lo necesario para ejecutar el DBCA en modo gráfico podría llevar varios minutos  y solamente tienes 30 minutos para dicha creación de base de datos. Considero que 30 minutos es suficiente para dicha creación utilizando un script que haga todo el trabajo.
+Solución:
+
+Si bien es cierto que realizar tareas en línea de comandos es un poco más complejo que el hecho de estar solamente apretando botones en una interfaz grafica, también es cierto que un script es más eficiente. Lo copio, le cambio los valores de los parámetros, lo ejecuto y listo. Teniendo los nodos con todos los prerrequisitos  y apoyándonos de una plantilla podemos llegar a crear esa base de datos en tan solo 30 minutos.
+
+DBCA – Modo silencioso
+A continuación se presenta todos los parámetros a incluir en el comando, a simple vista parece que son demasiados y complejos, pero si ya se está familiarizado con el DBCA en modo grafico, estos comandos nos serán muy familiares y serán muy fácil de comprender.
+
+253  dbca -silent -createDatabase -templateName General_Purpose.dbc -gdbname <SID> -sid <SID> -responseFile NO_VALUE -characterSet WE8ISO8859P1 -memoryPercentage 20 -emConfiguration LOCAL -sysPassword <CLAVE DE SYS> -systemPassword <CLAVE DE SYSTEM> -storageType FS -datafileDestination "/u02/<SID>/" -ignorePreReqs
+
+
+(*) Referencia
+https://www.oracle.com/technetwork/es/articles/database-performance/oracle-dbca-modo-silencioso-2424743-esa.html
