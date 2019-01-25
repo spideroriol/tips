@@ -1,6 +1,6 @@
 Como actualizar un Repositorio Maven para Añadir el ojdbc7.jar  (conecion con Oracle 11gR2 y Springboot
 
-Esto es cunando necesitas añadir un .JAR al Maven , y este no se encuentra totalmente configurado 
+Esto es cuando necesitas añadir un .JAR al Maven , y este no se encuentra totalmente configurado 
 
 I)
 Revisar si esta en el PATH
