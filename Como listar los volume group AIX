@@ -1,0 +1,56 @@
+A volume group is a collection of 1 to 32 physical volumes of varying sizes and types.
+A big volume group can have from 1 to 128 physical volumes. A scalable volume group can have up to 1024 physical volumes. A physical volume can belong to only one volume group per system; there can be up to 255 active volume groups.
+When a physical volume is assigned to a volume group, the physical blocks of storage media on it are organized into physical partitions of a size you specify when you create the volume group.
+When you install the system, one volume group (the root volume group, called rootvg) is automatically created that contains the base set of logical volumes required to start the system, as well as any other logical volumes you specify to the installation script. The rootvg includes paging space, the journal log, boot data, and dump storage, each in its own separate logical volume. The rootvg has attributes that differ from user-defined volume groups. For example, the rootvg cannot be imported or exported. When performing a command or procedure on the rootvg, you must be familiar with its unique characteristics. (**)
+
+
+The Code 
+#!/bin/ksh
+for vg in `lsvg -o`; do 
+        for fs in `lsvgfs $vg`; do 
+                printf "%-22s" $fs; 
+                for disk in `lsvg -p $vg | tail +3 | awk '{print $1}'`; do
+                        lspv -l $disk | grep -q " ${fs}$" && printf "%-8s" $disk; 
+                done; 
+                echo
+        done; 
+done
+
+
+ hdisk134hdisk75 hdisk76 hdisk77 hdisk78 hdisk79 hdisk80 hdisk94 hdisk88 hdisk72 hdisk90 hdisk89 hdisk73 hdisk74 hdisk91 hdisk93 hdisk84 hdisk82 hdisk83 hdisk81 hdisk87 hdisk86 hdisk92 hdisk71 hdisk85 hdisk141hdisk1  hdisk2  hdisk3  hdisk4
+/backup               hdisk117hdisk118hdisk119hdisk120hdisk121hdisk122hdisk123hdisk124hdisk125hdisk126hdisk127hdisk128hdisk129hdisk130hdisk131hdisk132hdisk140hdisk133
+/oradata/             hdisk97 hdisk98 hdisk99 hdisk105hdisk101hdisk96
+/backup2              hdisk142hdisk143hdisk144hdisk145hdisk146
+/arch                 hdisk108hdisk106hdisk109hdisk107
+/archive              hdisk108hdisk106hdisk107
+/oracle11g            hdisk111
+/agcloud12c           hdisk111
+/var/opt/BESClient    hdisk111
+/patrol               hdisk135hdisk138
+/ca_sched             hdisk138
+/oracle               hdisk135hdisk138
+/xcom_rep             hdisk138
+/esp_agentv11         hdisk135
+/ora_controlfile/P2KPRODhdisk135
+/audit                hdisk135
+/redo                 hdisk110
+/reportes/CB          hdisk137
+/netsec               hdisk0
+/nmon                 hdisk0
+/opt                  hdisk0
+/tmp                  hdisk0
+/usr                  hdisk0
+/var                  hdisk0
+/var/adm/ras/livedump hdisk0
+/                     hdisk0
+/admin                hdisk0
+/bcp/scripts          hdisk0
+/fixes                hdisk0
+/home                 hdisk0
+#
+
+(**)
+https://www.ibm.com/support/knowledgecenter/en/ssw_aix_72/com.ibm.aix.osdevice/volgroups.htm
+
+
+
