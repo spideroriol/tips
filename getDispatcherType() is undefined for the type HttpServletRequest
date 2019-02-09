@@ -1,0 +1,24 @@
+Maven 3.5
+
+
+
+Error
+getDispatcherType() is undefined for the type HttpServletRequest
+
+
+POM.XML
+
+Remplace :
+<dependency>
+  <groupId>javax.servlet</groupId>
+  <artifactId>servlet-api</artifactId>
+  <version>2.5</version>
+  <scope>provided</scope>
+</dependency>
+
+New:
+		<dependency>
+	        <groupId>javax.servlet</groupId>
+	        <artifactId>javax.servlet-api</artifactId>
+	        <version>3.1.0</version>
+		</dependency>
