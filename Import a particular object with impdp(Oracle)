@@ -1,0 +1,55 @@
+Guest
+I get *.dmp files from full expdp (with options content=metadata_only) . So , I wanna import a particular objects (from .DMP) :
+
+- TABLE STRUCTURES (INCLUDING INDEXES AND CONSTRAINTS) 
+- STORE PROCEDURE
+- FUNCTIONS
+- TRIGGER
+- PACKAGE
+
+so, I programed this code:
+
+Se podria aponer  las excepciones:
+=================================
+exclude=ALTER_FUNCTION
+exclude=ALTER_PROCEDURE
+exclude=ALTER_PACKAGE_SPEC
+
+set line 200
+set pagesize 400
+
+Tablas
+=======
+select 'impdp system/xxxxx DIRECTORY=CLOUD_DIR1 DUMPFILE=intsys.dmp SQLFILE='||substr(OBJECT_TYPE,1,3)||'_'||lower(OBJECT_NAME)||'.sql transform=storage:n TABLES=' ||'"'||owner||'.'||object_name||'"'||'  exclude=index,ref_constraint,constraint,TABLE_STATISTICS'
+from dba_objects 
+where owner='SCOTT' and object_type='TABLE'
+/
+
+StoreProcedure
+===============
+select 'impdp system/xxx DIRECTORY=CLOUD_DIR1 DUMPFILE=intsys.dmp SQLFILE='||substr(OBJECT_TYPE,1,3)||'_'||lower(OBJECT_NAME)||'.sql include=procedure:'||'\'||'"'||'like'||'\'||''''||OBJECT_NAME||'\'||''''||'\'||'"'
+from dba_objects 
+where owner='SCOTT' and object_type='PROCEDURE'
+/
+
+
+FUNCTION
+===============
+select 'impdp system/xxxxx DIRECTORY=CLOUD_DIR1 DUMPFILE=intsys.dmp SQLFILE='||substr(OBJECT_TYPE,1,3)||'_'||lower(OBJECT_NAME)||'.sql include=FUNCTION:'||'\'||'"'||'like'||'\'||''''||OBJECT_NAME||'\'||''''||'\'||'"'
+from dba_objects 
+where owner='SCOTT' and object_type='FUNCTION'
+/
+
+PACKAGE
+===============
+select 'impdp system/xxxx DIRECTORY=CLOUD_DIR1 DUMPFILE=intsys.dmp SQLFILE='||substr(OBJECT_TYPE,1,3)||'_'||lower(OBJECT_NAME)||'.sql include=PACKAGE:'||'\'||'"'||'like'||'\'||''''||OBJECT_NAME||'\'||''''||'\'||'"'
+from dba_objects 
+where owner='SCOTT' and object_type like'PACKAG%'
+/
+
+TRIGGER
+===============
+select 'impdp system/xxxxx DIRECTORY=CLOUD_DIR1 DUMPFILE=intsys.dmp SQLFILE='||substr(OBJECT_TYPE,1,3)||'_'||lower(OBJECT_NAME)||'.sql include=TRIGGER:'||'\'||'"'||'like'||'\'||''''||OBJECT_NAME||'\'||''''||'\'||'"'
+from dba_objects 
+where owner='SCOTT' and object_type like'TRIGGER'
+/
