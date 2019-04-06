@@ -1,0 +1,38 @@
+A Java class can be stored in a jar (Java Archive) file. The classes in a jar file are stored in a compressed format, much like a zip file. A jar file is a portable container of classes. To understand how to create a jar file in Java, follow these seven steps.
+1. create a Java (simple) program , (this was copy from internet, and only for this tutorial)
+
+public class ParameterDemo {
+        public static void main (String[] args) {
+                int firstNumber = 5;
+                int secondNumber = 9;
+                int result = add(firstNumber, secondNumber);
+                System.out.println(result);
+        }
+
+        public static int add (int num1, int num2) {
+            int sum = num1 + num2;
+            return sum;
+        }
+}
+~   
+
+2. compile  and test you class
+
+[oracle@ol7 ~]$ javac ParameterDemo.java 
+[oracle@ol7 ~]$ java ParameterDemo
+14
+
+
+3. make to Jar
+
+[oracle@ol7 ~]$ jar -cvf MyJarfile.jar ParameterDemo.class 
+added manifest
+adding: ParameterDemo.class(in = 491) (out= 340)(deflated 30%)
+[oracle@ol7 ~]$ ls -l 
+total 36
+d
+-rw-r--r--. 1 oracle oinstall  812 Apr  6 17:26 MyJarfile.jar
+-rw-r--r--. 1 oracle oinstall  491 Apr  6 17:15 ParameterDemo.class
+-rw-r--r--. 1 oracle oinstall  390 Apr  6 16:14 ParameterDemo.java
+-
+
